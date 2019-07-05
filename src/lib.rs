@@ -1,7 +1,5 @@
-use std::marker::PhantomData;
-
 // Choose which scancode set to use
-mod set;
+pub mod set;
 
 use set::KeyType;
 use set::Set;

@@ -141,10 +141,9 @@ impl KeyType {
     }
 }
 
-struct Set1 {}
+pub struct Set1 {}
 
 impl Set for Set1 {
-
     // /// Match a given scancode according to PS/2 keyboard spec
     // /// Full specifications: https://wiki.osdev.org/PS/2_Keyboard
     fn match_scancode(&self, scancode: u8) -> Option<KeyType> {
@@ -217,6 +216,4 @@ impl Set for Set1 {
         };
         c
     }
-
 }
-
