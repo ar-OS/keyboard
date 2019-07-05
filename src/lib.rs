@@ -1,3 +1,5 @@
+#![no_std]
+
 // Choose which scancode set to use
 pub mod set;
 
