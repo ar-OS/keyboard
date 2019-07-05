@@ -1,0 +1,222 @@
+pub trait Set {
+    fn match_scancode(&self, scancode: u8) -> Option<KeyType>;
+}
+
+pub enum FunctionalKey {
+    F1,
+    F2,
+    F3,
+    F4,
+    F5,
+    F6,
+    F7,
+    F8,
+    F9,
+    F10,
+    F11,
+    F12,
+}
+
+pub enum CharacterKey {
+    C1,
+    C2,
+    C3,
+    C4,
+    C5,
+    C6,
+    C7,
+    C8,
+    C9,
+    C0,
+    CA,
+    CB,
+    CC,
+    CD,
+    CE,
+    CF,
+    CG,
+    CH,
+    CI,
+    CJ,
+    CK,
+    CL,
+    CM,
+    CN,
+    CO,
+    CP,
+    CQ,
+    CR,
+    CS,
+    CT,
+    CU,
+    CV,
+    CW,
+    CX,
+    CY,
+    CZ,
+    CBackSlash,
+    CDash,
+    CEqual,
+    CSpace,
+    COBracket,
+    CCBracket,
+    CNewLine,
+    CSemiColon,
+    CSlash,
+    CBackTick,
+    CQuote,
+    CComma,
+    CDot,
+    CStar,
+}
+
+impl CharacterKey {
+    fn value(&self) -> char {
+        match *self {
+            CharacterKey::C1 => '1',
+            CharacterKey::C2 => '2',
+            CharacterKey::C3 => '3',
+            CharacterKey::C4 => '4',
+            CharacterKey::C5 => '5',
+            CharacterKey::C6 => '6',
+            CharacterKey::C7 => '7',
+            CharacterKey::C8 => '8',
+            CharacterKey::C9 => '9',
+            CharacterKey::C0 => '0',
+            CharacterKey::CA => 'a',
+            CharacterKey::CB => 'b',
+            CharacterKey::CC => 'c',
+            CharacterKey::CD => 'd',
+            CharacterKey::CE => 'e',
+            CharacterKey::CF => 'f',
+            CharacterKey::CG => 'g',
+            CharacterKey::CH => 'h',
+            CharacterKey::CI => 'i',
+            CharacterKey::CJ => 'j',
+            CharacterKey::CK => 'k',
+            CharacterKey::CL => 'l',
+            CharacterKey::CM => 'm',
+            CharacterKey::CN => 'n',
+            CharacterKey::CO => 'o',
+            CharacterKey::CP => 'p',
+            CharacterKey::CQ => 'q',
+            CharacterKey::CR => 'r',
+            CharacterKey::CS => 's',
+            CharacterKey::CT => 't',
+            CharacterKey::CU => 'u',
+            CharacterKey::CV => 'v',
+            CharacterKey::CW => 'w',
+            CharacterKey::CX => 'x',
+            CharacterKey::CY => 'y',
+            CharacterKey::CZ => 'z',
+            CharacterKey::CBackSlash => '\\',
+            CharacterKey::CDash => '-',
+            CharacterKey::CEqual => '=',
+            CharacterKey::CSpace => ' ',
+            CharacterKey::COBracket => '[',
+            CharacterKey::CCBracket => ']',
+            CharacterKey::CNewLine => '\n',
+            CharacterKey::CSemiColon => ';',
+            CharacterKey::CSlash => '/',
+            CharacterKey::CBackTick => '`',
+            CharacterKey::CQuote => '\'',
+            CharacterKey::CComma => ',',
+            CharacterKey::CDot => '.',
+            CharacterKey::CStar => '*',
+        }
+    }
+}
+
+pub enum KeyType {
+    Character(CharacterKey),
+    Functional(FunctionalKey),
+}
+
+impl KeyType {
+    pub fn keycode(&self) -> Option<char> {
+        match self {
+            KeyType::Character(e) => Some(e.value()),
+            _ => None,
+        }
+    }
+}
+
+struct Set1 {}
+
+impl Set for Set1 {
+
+    // /// Match a given scancode according to PS/2 keyboard spec
+    // /// Full specifications: https://wiki.osdev.org/PS/2_Keyboard
+    fn match_scancode(&self, scancode: u8) -> Option<KeyType> {
+        let c: Option<KeyType> = match scancode {
+            // Printable Characters
+            0x02 => Some(KeyType::Character(CharacterKey::C1)),
+            0x03 => Some(KeyType::Character(CharacterKey::C2)),
+            0x04 => Some(KeyType::Character(CharacterKey::C3)),
+            0x05 => Some(KeyType::Character(CharacterKey::C4)),
+            0x06 => Some(KeyType::Character(CharacterKey::C5)),
+            0x07 => Some(KeyType::Character(CharacterKey::C6)),
+            0x08 => Some(KeyType::Character(CharacterKey::C7)),
+            0x09 => Some(KeyType::Character(CharacterKey::C8)),
+            0x0A => Some(KeyType::Character(CharacterKey::C9)),
+            0x0B => Some(KeyType::Character(CharacterKey::C0)),
+            0x0C => Some(KeyType::Character(CharacterKey::CDash)),
+            0x0D => Some(KeyType::Character(CharacterKey::CEqual)),
+            0x10 => Some(KeyType::Character(CharacterKey::CQ)),
+            0x11 => Some(KeyType::Character(CharacterKey::CW)),
+            0x12 => Some(KeyType::Character(CharacterKey::CE)),
+            0x13 => Some(KeyType::Character(CharacterKey::CR)),
+            0x14 => Some(KeyType::Character(CharacterKey::CT)),
+            0x15 => Some(KeyType::Character(CharacterKey::CY)),
+            0x16 => Some(KeyType::Character(CharacterKey::CU)),
+            0x17 => Some(KeyType::Character(CharacterKey::CI)),
+            0x18 => Some(KeyType::Character(CharacterKey::CO)),
+            0x19 => Some(KeyType::Character(CharacterKey::CP)),
+            0x1A => Some(KeyType::Character(CharacterKey::COBracket)),
+            0x1B => Some(KeyType::Character(CharacterKey::CCBracket)),
+            0x1C => Some(KeyType::Character(CharacterKey::CNewLine)),
+            0x1E => Some(KeyType::Character(CharacterKey::CA)),
+            0x1F => Some(KeyType::Character(CharacterKey::CS)),
+            0x20 => Some(KeyType::Character(CharacterKey::CD)),
+            0x21 => Some(KeyType::Character(CharacterKey::CF)),
+            0x22 => Some(KeyType::Character(CharacterKey::CG)),
+            0x23 => Some(KeyType::Character(CharacterKey::CH)),
+            0x24 => Some(KeyType::Character(CharacterKey::CJ)),
+            0x25 => Some(KeyType::Character(CharacterKey::CK)),
+            0x26 => Some(KeyType::Character(CharacterKey::CL)),
+            0x27 => Some(KeyType::Character(CharacterKey::CSemiColon)),
+            0x28 => Some(KeyType::Character(CharacterKey::CQuote)),
+            0x29 => Some(KeyType::Character(CharacterKey::CBackTick)),
+            0x2B => Some(KeyType::Character(CharacterKey::CBackSlash)),
+            0x2C => Some(KeyType::Character(CharacterKey::CZ)),
+            0x2D => Some(KeyType::Character(CharacterKey::CX)),
+            0x2E => Some(KeyType::Character(CharacterKey::CC)),
+            0x2F => Some(KeyType::Character(CharacterKey::CV)),
+            0x30 => Some(KeyType::Character(CharacterKey::CB)),
+            0x31 => Some(KeyType::Character(CharacterKey::CN)),
+            0x32 => Some(KeyType::Character(CharacterKey::CM)),
+            0x33 => Some(KeyType::Character(CharacterKey::CComma)),
+            0x34 => Some(KeyType::Character(CharacterKey::CDot)),
+            0x35 => Some(KeyType::Character(CharacterKey::CSlash)),
+            0x37 => Some(KeyType::Character(CharacterKey::CStar)),
+            0x39 => Some(KeyType::Character(CharacterKey::CSpace)),
+            // Functional keys
+            0x3B => Some(KeyType::Functional(FunctionalKey::F1)),
+            0x3C => Some(KeyType::Functional(FunctionalKey::F2)),
+            0x3D => Some(KeyType::Functional(FunctionalKey::F3)),
+            0x3E => Some(KeyType::Functional(FunctionalKey::F4)),
+            0x3F => Some(KeyType::Functional(FunctionalKey::F5)),
+            0x40 => Some(KeyType::Functional(FunctionalKey::F6)),
+            0x41 => Some(KeyType::Functional(FunctionalKey::F7)),
+            0x42 => Some(KeyType::Functional(FunctionalKey::F8)),
+            0x43 => Some(KeyType::Functional(FunctionalKey::F9)),
+            0x44 => Some(KeyType::Functional(FunctionalKey::F10)),
+            0x57 => Some(KeyType::Functional(FunctionalKey::F11)),
+            0x58 => Some(KeyType::Functional(FunctionalKey::F12)),
+            _ => None,
+        };
+        c
+    }
+
+}
+
