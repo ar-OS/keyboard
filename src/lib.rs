@@ -20,13 +20,13 @@ where
 {
     /// Allows to construct a new Keyboard object
     /// based on a given scancode set
-    fn new(set: S) -> Keyboard<S> {
+    pub fn new(set: S) -> Keyboard<S> {
         Keyboard { set: set }
     }
     /// Allows to append a new keycode
     /// and to retrieve the good scancode
     /// based on the context
-    fn push(&mut self, scancode: u8) -> Option<KeyType> {
+    pub fn push(&mut self, scancode: u8) -> Option<KeyType> {
         self.set.match_scancode(scancode)
     }
 }
